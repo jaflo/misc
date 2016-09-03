@@ -26,8 +26,6 @@ usage: pitch.py [-h] [-s SPEED] [-fo FADEOUT] [-r] [-m MAXSTACK]
                 input midi output
 example: python pitch.py dog.mp4 151186.mid megalovania.mp4
 
-python pitch.py dog.mp4 151186.mid mega.mp4
-
 speedx, stretch, pitchshift from zulko (black magic if you ask me):
 https://zulko.github.io/blog/2014/03/29/soundstretching-and-pitch-shifting-in-python/
 """
@@ -146,8 +144,6 @@ def poop(source, destination, midi_file, stretch, fadeout, rebuild, max_stack):
 
     print "Adding video clips"
     clips = [video.set_duration(1)] # to set the video size
-    positions = [(-1, 1), (1, 1), (1, -1), (-1, -1), (0, 1),
-        (0, -1), (-1, 0), (1, 0)] # non-main track positions
     positions = [("left", "bottom"), ("right", "bottom"), ("left", "top"),
         ("right", "top"), ("center", "bottom"), ("center", "top"),
         ("left", "center"), ("right", "center")] # non-main tracks
@@ -189,13 +185,6 @@ def poop(source, destination, midi_file, stretch, fadeout, rebuild, max_stack):
                     """
                     if not mainvid:
                         stackheight = 6
-                        """x, y = positions[curpos % len(positions)]
-                        x *= 1-((len(opennotes)-1)/stackheight)
-                        x = float(1+x)/2
-                        y *= 1-((len(opennotes)-1)/stackheight)
-                        y = float(1+y)/2
-                        print (x,y)
-                        part = part.set_position((x, y), relative=True)"""
                         part = part.set_position(positions[curpos % len(positions)])
                     clips.append(part)
                 elif message.type == "note_off":
